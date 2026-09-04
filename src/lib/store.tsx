@@ -137,7 +137,7 @@ export function projectedAverage(s: Subject, overrides: Record<string, number> =
 export function neededGrade(s: Subject, target: number): number | null {
   const pending = s.assessments.filter((a) => a.grade === null && a.weight !== null);
   if (pending.length !== 1) return null;
-  const pendingWeight = pending[0].weight ?? 0;
+  const pendingWeight = pending[0]?.weight ?? 0;
   if (pendingWeight === 0) return null;
   const totalWeight = s.assessments.reduce((acc, a) => acc + (a.weight ?? 0), 0);
   const earned = s.assessments
@@ -159,8 +159,8 @@ export function weightedAverage(courses: { credits: number; grade: number | null
 }
 
 export function minutesBetween(start: string, end: string) {
-  const [h1, m1] = start.split(":").map(Number);
-  const [h2, m2] = end.split(":").map(Number);
+  const [h1 = 0, m1 = 0] = start.split(":").map(Number);
+  const [h2 = 0, m2 = 0] = end.split(":").map(Number);
   return Math.max(0, h2 * 60 + m2 - (h1 * 60 + m1));
 }
 
